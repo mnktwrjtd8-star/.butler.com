@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUTLER HOUSE · 资本级商业计划书</title>
+<style>
+  :root{
+    --navy:#1A3A5C;
+    --navy-deep:#0E2438;
+    --cyan:#00D4FF;
+    --ink:#10202F;
+    --slate:#5A6B7B;
+    --mist:#F4F7FA;
+    --line:#E2E8EF;
+    --paper:#FFFFFF;
+    --gold:#C9A24B;
+    --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Inter","Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;background:var(--navy-deep);font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--cyan);color:var(--navy-deep);}
+
+  /* ---------- Deck shell ---------- */
+  .deck{position:relative;width:100%;height:100vh;overflow:hidden;background:var(--paper);}
+  .slide{position:absolute;inset:0;display:none;padding:clamp(46px,6.5vh,84px) clamp(44px,7vw,116px);}
+  .slide.is-active{display:flex;flex-direction:column;justify-content:center;}
+  .slide.dark{background:var(--navy);color:#fff;}
+  .inner{width:100%;max-width:1180px;margin:0;}
+
+  /* ---------- Type ---------- */
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan);font-weight:600;margin-bottom:22px;}
+  .slide.dark .eyebrow{color:var(--cyan);}
+  .display{font-size:clamp(40px,6.4vw,86px);font-weight:200;line-height:1.02;letter-spacing:-.02em;color:var(--navy);}
+  .slide.dark .display{color:#fff;}
+  .h1{font-size:clamp(28px,3.4vw,46px);font-weight:200;line-height:1.1;letter-spacing:-.01em;color:var(--navy);}
+  .slide.dark .h1{color:#fff;}
+  .h2{font-size:clamp(20px,2.2vw,28px);font-weight:300;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px;}
+  .lead{font-size:clamp(15px,1.35vw,19px);font-weight:300;line-height:1.65;color:var(--slate);max-width:62ch;}
+  .body{font-size:14.5px;font-weight:400;line-height:1.7;color:var(--slate);}
+  .small{font-size:12.5px;color:var(--slate);line-height:1.6;}
+  .muted{color:var(--slate);}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+  .accent{color:var(--cyan);}
+
+  /* ---------- Grid ---------- */
+  .row{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(20px,2.4vw,44px);align-items:start;}
+  .c3{grid-column:span 3;} .c4{grid-column:span 4;} .c5{grid-column:span 5;}
+  .c6{grid-column:span 6;} .c7{grid-column:span 7;} .c8{grid-column:span 8;}
+  .c9{grid-column:span 9;} .c12{grid-column:span 12;}
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,72px);align-items:center;}
+
+  /* ---------- Cards ---------- */
+  .card{border:1px solid var(--line);border-radius:14px;padding:26px 26px;background:var(--paper);}
+  .slide.dark .card{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.04);}
+  .kpi-label{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin-bottom:14px;}
+  .kpi-val{font-size:clamp(26px,3vw,40px);font-weight:200;color:var(--navy);line-height:1.05;letter-spacing:-.01em;}
+  .slide.dark .kpi-val{color:#fff;}
+  .kpi-sub{font-size:13px;color:var(--slate);margin-top:10px;line-height:1.55;}
+  .kpi-val .u{font-size:.5em;color:var(--cyan);margin-left:4px;font-weight:400;}
+
+  /* ---------- Tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top;}
+  thead th{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);font-weight:600;border-bottom:2px solid var(--navy);}
+  tbody tr:last-child td{border-bottom:none;}
+  td .hl{color:var(--navy);font-weight:600;}
+  .slide.dark th, .slide.dark td{border-color:rgba(255,255,255,.12);color:#dfe8f0;}
+  .slide.dark thead th{color:#9fb4c6;border-bottom-color:var(--cyan);}
+  .slide.dark td .hl{color:#fff;}
+
+  /* ---------- Charts ---------- */
+  .chart{width:100%;height:auto;display:block;}
+  .chart text{font-family:var(--sans);}
+  .bar{fill:var(--navy);}
+  .bar.hi{fill:var(--cyan);}
+  .slide.dark .bar{fill:#3d6e96;}
+  .slide.dark .bar.hi{fill:var(--cyan);}
+  .axis{stroke:var(--line);stroke-width:1;}
+  .slide.dark .axis{stroke:rgba(255,255,255,.18);}
+  .clab{fill:var(--slate);font-size:13px;}
+  .slide.dark .clab{fill:#9fb4c6;}
+  .cval{fill:var(--navy);font-size:14px;font-weight:600;}
+  .slide.dark .cval{fill:#fff;}
+  .cline{fill:none;stroke:var(--cyan);stroke-width:3;}
+  .cdot{fill:var(--cyan);}
+  .clegend{fill:var(--slate);font-size:12.5px;}
+  .slide.dark .clegend{fill:#9fb4c6;}
+
+  /* ---------- Timeline ---------- */
+  .tl{display:flex;gap:0;position:relative;margin-top:8px;}
+  .tl::before{content:"";position:absolute;top:9px;left:0;right:0;height:2px;background:var(--line);}
+  .slide.dark .tl::before{background:rgba(255,255,255,.16);}
+  .tl .node{flex:1;position:relative;padding-right:18px;}
+  .tl .dot{width:18px;height:18px;border-radius:50%;background:var(--paper);border:3px solid var(--navy);position:relative;z-index:1;margin-bottom:18px;}
+  .tl .dot.now{background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 0 5px rgba(0,212,255,.18);}
+  .tl .yr{font-size:12px;letter-spacing:.1em;color:var(--cyan);font-weight:600;margin-bottom:6px;}
+  .tl .t{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:5px;}
+  .tl .d{font-size:12.5px;color:var(--slate);line-height:1.5;}
+  .slide.dark .tl .t{color:#fff;}
+
+  /* ---------- Cover / closing ---------- */
+  .cover-img{position:absolute;inset:0;background-size:cover;background-position:center;}
+  .cover-grid{position:relative;display:grid;grid-template-columns:.92fr 1.08fr;height:100%;}
+  .cover-left{background:var(--navy);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,5vw,90px);}
+  .cover-right{position:relative;overflow:hidden;}
+  .brand{font-size:clamp(30px,3.4vw,52px);font-weight:200;letter-spacing:.04em;line-height:1;margin-bottom:6px;}
+  .brand .en{font-size:.6em;letter-spacing:.34em;color:var(--cyan);display:block;margin-bottom:18px;font-weight:400;}
+  .slogan{font-size:clamp(17px,1.7vw,23px);font-weight:300;line-height:1.5;color:#dbe7f1;max-width:30ch;margin-top:26px;}
+  .cover-meta{margin-top:auto;font-size:12.5px;letter-spacing:.08em;color:#8fa6ba;}
+  .cover-meta b{color:#fff;font-weight:500;}
+
+  .closing-left{background:var(--navy-deep);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,5vw,90px);}
+  .closing-right{position:relative;overflow:hidden;}
+  .closing-right::after{content:"";position:absolute;inset:0;background:rgba(14,36,56,.34);}
+  .cta-line{font-size:clamp(22px,2.6vw,36px);font-weight:200;line-height:1.3;letter-spacing:-.01em;color:#fff;max-width:24ch;}
+  .cta-line .accent{color:var(--cyan);}
+  .contact{margin-top:34px;font-size:13px;color:#9fb4c6;line-height:1.9;letter-spacing:.04em;}
+
+  /* ---------- HUD ---------- */
+  .progress{position:absolute;top:0;left:0;height:3px;background:var(--cyan);width:0;z-index:50;transition:width .45s ease;}
+  .hud{position:absolute;bottom:22px;right:30px;font-size:12px;letter-spacing:.14em;color:var(--slate);z-index:50;font-variant-numeric:tabular-nums;}
+  .slide.dark ~ .hud,.hud.on-dark{color:#7e93a6;}
+  .hint{position:absolute;bottom:22px;left:30px;font-size:11.5px;letter-spacing:.1em;color:#aab8c4;z-index:50;}
+  .badge{display:inline-block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,212,255,.4);border-radius:30px;padding:5px 12px;margin-bottom:20px;}
+
+  /* ---------- reveal ---------- */
+  .slide.is-active .inner{animation:fadeUp .55s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+  .note{list-style:none;display:grid;gap:14px;}
+  .note li{position:relative;padding-left:22px;font-size:14px;color:var(--slate);line-height:1.6;}
+  .note li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;background:var(--cyan);border-radius:50%;}
+  .pains li::before{background:var(--navy);}
+  .tag{display:inline-block;font-size:11px;letter-spacing:.1em;padding:3px 9px;border-radius:6px;background:var(--mist);color:var(--navy);font-weight:600;margin-bottom:10px;}
+  .slide.dark .tag{background:rgba(255,255,255,.08);color:#cfe4f2;}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide is-active" data-bg="cover">
+    <div class="cover-grid">
+      <div class="cover-left">
+        <div class="brand"><span class="en">BUTLER HOUSE</span>巴特勒管家</div>
+        <div class="slogan">以终为始 —— 做中国高端家庭服务的第一品牌。</div>
+        <div class="cover-meta">
+          资本级商业计划书 · CAPITAL-GRADE BUSINESS PLAN<br>
+          <b>Pre-A 轮融资 · 3000 万人民币</b> · 机密文件 · 仅供投资人查阅
+        </div>
+      </div>
+      <div class="cover-right">
+        <div class="cover-img" style="background-image:url('assets/Minimalist_luxury_interior__so_2026-07-07T15-03-24.png')"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · EXECUTIVE SUMMARY -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Executive Summary · 执行摘要</div>
+      <div class="h1" style="margin-bottom:42px;">五个数字，看懂这门生意</div>
+      <div class="row">
+        <div class="c3"><div class="card"><div class="kpi-label">赛道定位</div><div class="kpi-val" style="font-size:24px;">高端家庭<br>服务科技</div><div class="kpi-sub">Premium Household Services Platform</div></div></div>
+        <div class="c3"><div class="card"><div class="kpi-label">商业模式</div><div class="kpi-val" style="font-size:24px;">订阅+佣金<br>+增值</div><div class="kpi-sub">Subscription · Commission · Upsell</div></div></div>
+        <div class="c3"><div class="card"><div class="kpi-label">目标退出</div><div class="kpi-val" style="font-size:24px;">5–7 年<span class="u">IPO</span></div><div class="kpi-sub">港股 / A 股主板，或战略并购</div></div></div>
+        <div class="c3"><div class="card"><div class="kpi-label">融资需求</div><div class="kpi-val" style="font-size:24px;">0.3–5<span class="u">亿</span></div><div class="kpi-sub">Pre-A 3000万 · A 1.2亿 · B 3–5亿</div></div></div>
+      </div>
+      <div class="row" style="margin-top:24px;">
+        <div class="c12"><div class="card" style="background:var(--mist);border:none;"><div class="kpi-label">估值逻辑</div><div class="kpi-val" style="font-size:30px;">50 – 100<span class="u">亿</span></div><div class="kpi-sub">按 SaaS + 服务平台的混合估值，以退出时点为锚的目标估值区间。</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · EXIT SCENARIOS -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 01 · 以终为始</div>
+      <div class="h1" style="margin-bottom:14px;">从退出路径，反推每一步战略</div>
+      <div class="lead" style="margin-bottom:46px;">不为融资而融资。所有产品、运营与组织动作，都对齐 5–7 年后的资本退出窗口。</div>
+      <div class="row">
+        <div class="c4"><div class="card" style="border-top:3px solid var(--cyan);"><div class="tag">路径 A · 最优先</div><div class="h2">港股 / A 股主板 IPO</div><div class="kpi-val">50–100<span class="u">亿</span></div><div class="kpi-sub">Year 5–6 窗口，对标物业与服务龙头 PS 倍数</div></div></div>
+        <div class="c4"><div class="card"><div class="tag">路径 B · 备选</div><div class="h2">战略并购</div><div class="kpi-val">40–80<span class="u">亿</span></div><div class="kpi-sub">家电 / 物业巨头（美的 · 海尔 · 碧桂园服务）</div></div></div>
+        <div class="c4"><div class="card"><div class="tag">路径 C · 弹性</div><div class="h2">美股 IPO</div><div class="kpi-val">8–15<span class="u">亿$</span></div><div class="kpi-sub">若政策窗口放开，提供额外退出弹性</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · VALUATION LOGIC -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 01 · 资本市场估值逻辑</div>
+      <div class="h1" style="margin-bottom:32px;">对标公司，与我们的估值锚点</div>
+      <div class="split">
+        <div>
+          <div class="kpi-label" style="margin-bottom:14px;">可比公司</div>
+          <table>
+            <thead><tr><th>公司</th><th>估值 / 市值</th><th>PS</th></tr></thead>
+            <tbody>
+              <tr><td class="hl">碧桂园服务</td><td>300 亿+</td><td>2–3x</td></tr>
+              <tr><td class="hl">好慷在家</td><td>50 亿+</td><td>3–4x</td></tr>
+              <tr><td class="hl">TaskRabbit</td><td>被 IKEA 收购</td><td>—</td></tr>
+              <tr><td class="hl">管家帮</td><td>新三板挂牌</td><td>1–2x</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="kpi-label" style="margin-bottom:14px;">巴特勒的估值锚点</div>
+          <ul class="note">
+            <li><b style="color:var(--navy)">短期（1–3 年）</b>：按 GMV 的 0.5–1x 估值，重增长率与用户质量。</li>
+            <li><b style="color:var(--navy)">中期（3–5 年）</b>：按收入的 3–5x 估值，重盈利能力与护城河。</li>
+            <li><b style="color:var(--navy)">长期（5 年+）</b>：按利润的 15–25x 估值，重品牌溢价与垄断地位。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · TAM/SAM/SOM -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 02 · 赛道选择</div>
+      <div class="h1" style="margin-bottom:36px;">千亿级市场，尚无绝对龙头</div>
+      <svg class="chart" viewBox="0 0 1000 320" role="img" aria-label="TAM SAM SOM">
+        <text x="0" y="36" class="clab" style="font-weight:600;fill:var(--navy)">TAM</text>
+        <text x="0" y="56" class="clab" style="font-size:11px">总可触达</text>
+        <rect x="150" y="20" width="780" height="42" class="bar"/>
+        <text x="942" y="48" class="cval" text-anchor="end">7500亿 – 2.5万亿 / 年</text>
+
+        <text x="0" y="136" class="clab" style="font-weight:600;fill:var(--navy)">SAM</text>
+        <text x="0" y="156" class="clab" style="font-size:11px">可服务</text>
+        <rect x="150" y="120" width="312" height="42" class="bar"/>
+        <text x="474" y="148" class="cval">3000 亿 / 年</text>
+
+        <text x="0" y="236" class="clab" style="font-weight:600;fill:var(--navy)">SOM</text>
+        <text x="0" y="256" class="clab" style="font-size:11px">前 5 年</text>
+        <rect x="150" y="220" width="31" height="42" class="bar hi"/>
+        <text x="192" y="248" class="cval">300 亿 GMV (Year 5)</text>
+
+        <line x1="150" y1="290" x2="930" y2="290" class="axis"/>
+        <text x="150" y="312" class="clegend">市占率：从 0.3% → 10%</text>
+      </svg>
+      <div class="lead" style="margin-top:18px;">高净值家庭 500 万户（可投资资产 &gt; 1000 万），年家庭服务支出 15–50 万 / 户；目标聚焦一线 + 新一线 150 万高净值家庭。</div>
+    </div>
+  </section>
+
+  <!-- 6 · PAIN & OPPORTUNITY -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 02 · 市场痛点与机会</div>
+      <div class="h1" style="margin-bottom:38px;">旧市场的问题，即我们的破局点</div>
+      <div class="split">
+        <div>
+          <div class="kpi-label" style="margin-bottom:16px;color:var(--navy)">现有市场的四大问题</div>
+          <ul class="note pains">
+            <li><b>供给侧碎片化</b>：95% 来自个体或小微，标准化低。</li>
+            <li><b>信任成本高</b>：缺乏服务人员背景与专业能力机制。</li>
+            <li><b>服务不可预期</b>：质量波动大，无售后保障。</li>
+            <li><b>数字化程度低</b>：仍停留在电话 / 微信接单。</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kpi-label" style="margin-bottom:16px;color:var(--cyan)">Butler House 的破局点</div>
+          <ul class="note">
+            <li>建立「高端管家」职业认证体系（对标 CFA / CPA）。</li>
+            <li>构建服务 SOP + 数字化智能调度系统。</li>
+            <li>打造「管家即服务」Butler-as-a-Service 订阅模式。</li>
+          </ul>
+          <div class="card" style="margin-top:26px;background:var(--mist);border:none;">
+            <div class="small">差异定位：<b style="color:var(--navy)">英仕派的服务品质 + 好慷的互联网思维 + 专为新富阶层设计</b>。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · REVENUE MODEL -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 03 · 商业模式</div>
+      <div class="h1" style="margin-bottom:34px;">收入结构：以订阅为锚，多元变现</div>
+      <svg class="chart" viewBox="0 0 1000 300" role="img" aria-label="收入结构">
+        <text x="0" y="40" class="clab">会员订阅</text>
+        <rect x="150" y="22" width="468" height="36" class="bar hi"/>
+        <text x="630" y="48" class="cval">60% · 毛利率 85%+</text>
+
+        <text x="0" y="120" class="clab">服务佣金</text>
+        <rect x="150" y="102" width="195" height="36" class="bar"/>
+        <text x="357" y="128" class="cval">25% · 70%</text>
+
+        <text x="0" y="200" class="clab">增值服务</text>
+        <rect x="150" y="182" width="94" height="36" class="bar"/>
+        <text x="256" y="208" class="cval">12% · 60%</text>
+
+        <text x="0" y="280" class="clab">B 端 SaaS</text>
+        <rect x="150" y="262" width="23" height="36" class="bar"/>
+        <text x="185" y="288" class="cval">3% · 90%</text>
+      </svg>
+      <div class="row" style="margin-top:30px;">
+        <div class="c4"><div class="card"><div class="kpi-label">金卡</div><div class="kpi-val" style="font-size:26px;">¥2,999<span class="u">/月</span></div><div class="kpi-sub">基础管家 · 12 次 / 月</div></div></div>
+        <div class="c4"><div class="card"><div class="kpi-label">白金卡</div><div class="kpi-val" style="font-size:26px;">¥6,999<span class="u">/月</span></div><div class="kpi-sub">专属管家 + 增值服务</div></div></div>
+        <div class="c4"><div class="card"><div class="kpi-label">黑卡</div><div class="kpi-val" style="font-size:26px;">¥19,999<span class="u">/月</span></div><div class="kpi-sub">全天候 + 优先权 + 定制</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · UNIT ECONOMICS -->
+  <section class="slide dark">
+    <div class="inner">
+      <div class="eyebrow">Chapter 03 · 单位经济模型</div>
+      <div class="h1" style="margin-bottom:14px;">每个管家，都是一台印钞机</div>
+      <div class="lead" style="margin-bottom:50px;color:#9fb4c6;">单管家月贡献 GMV 1.5–3.5 万，平台收入 3,000–7,000 元，获客与管理成本仅 800–1,200 元 / 月。</div>
+      <div class="row">
+        <div class="c4"><div class="card"><div class="kpi-label">单管家月净利贡献</div><div class="kpi-val">2,200–5,800<span class="u">元</span></div><div class="kpi-sub">平台口径，扣除获客与管理成本</div></div></div>
+        <div class="c4"><div class="card"><div class="kpi-label">LTV / CAC</div><div class="kpi-val">15–25<span class="u">x</span></div><div class="kpi-sub">行业顶尖水平，留存周期 18 个月</div></div></div>
+        <div class="c4"><div class="card"><div class="kpi-label">佣金抽成区间</div><div class="kpi-val">15–25<span class="u">%</span></div><div class="kpi-sub">基础 15% → 高端定制 25%</div></div></div>
+        <div class="c4"><div class="card"><div class="kpi-label">订阅毛利</div><div class="kpi-val">85<span class="u">%+</span></div><div class="kpi-sub">高毛利业务，构成收入基本盘</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · MOAT (with big image) -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 04 · 竞争壁垒与护城河</div>
+      <div class="split" style="gap:clamp(28px,4vw,64px);">
+        <div style="position:relative;">
+          <div style="width:100%;aspect-ratio:4/3;background-image:url('assets/Close_up_still_life_of_a_singl_2026-07-07T15-03-54.png');background-size:cover;background-position:center;border-radius:16px;"></div>
+        </div>
+        <div>
+          <div class="h2">四重护城河，时间越久越深</div>
+          <ul class="note" style="margin-top:8px;">
+            <li><b style="color:var(--navy)">品牌壁垒（10 年+）</b>：「高端管家 = 巴特勒」的心智占位。</li>
+            <li><b style="color:var(--navy)">网络效应（双边）</b>：家庭端与管家端互相吸引，匹配效率随规模递增。</li>
+            <li><b style="color:var(--navy)">数据壁垒</b>：高净值家庭服务偏好大数据，AI 需求预测形成飞轮。</li>
+            <li><b style="color:var(--navy)">供应链壁垒</b>：自建 Butler Academy + 期权绑定，锁定优质人才供给。</li>
+          </ul>
+          <div class="card" style="margin-top:24px;background:var(--mist);border:none;"><div class="small">核心认证：联合国际管家学院打造中国首个「星级管家」评定标准 —— 谁定义标准，谁就是行业定义者。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · COMPETITION MATRIX -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 04 · 竞争策略矩阵</div>
+      <div class="h1" style="margin-bottom:30px;">我们站在空白地带</div>
+      <table>
+        <thead><tr><th>维度</th><th>好慷在家</th><th>管家帮</th><th>英仕派</th><th style="color:var(--cyan)">巴特勒（我们）</th></tr></thead>
+        <tbody>
+          <tr><td class="hl">目标客群</td><td>中高端白领</td><td>大众家庭</td><td>顶级富豪</td><td>新富 + 高净值</td></tr>
+          <tr><td class="hl">价格带 / 年</td><td>5K–2 万</td><td>1K–1 万</td><td>12 万+</td><td>3–24 万</td></tr>
+          <tr><td class="hl">技术能力</td><td>★★★★</td><td>★★</td><td>★★★</td><td>★★★★★</td></tr>
+          <tr><td class="hl">品牌调性</td><td>年轻化</td><td>传统</td><td>奢华老派</td><td>现代高端</td></tr>
+          <tr><td class="hl">资本运作</td><td>★★★★</td><td>★★★</td><td>★★</td><td>★★★★★</td></tr>
+          <tr><td class="hl">可复制性</td><td>★★★★★</td><td>★★★</td><td>★★</td><td>★★★★☆</td></tr>
+        </tbody>
+      </table>
+      <div class="lead" style="margin-top:24px;">价格空白（2–10 万 / 年）、人群空白（新富阶层）、科技空白（AI 调度）、认证空白（行业标准）—— 四重空白，皆为我们所填。</div>
+    </div>
+  </section>
+
+  <!-- 11 · GROWTH PATH -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 05 · 增长策略 Go-to-Market</div>
+      <div class="h1" style="margin-bottom:14px;">三阶段，从 100 户到 50 万户</div>
+      <div class="lead" style="margin-bottom:30px;">GMV 五年增长 160 倍：验证 → 复制 → 规模化。</div>
+      <svg class="chart" viewBox="0 0 1000 380" role="img" aria-label="GMV 增长">
+        <line x1="80" y1="320" x2="960" y2="320" class="axis"/>
+        <!-- bars -->
+        <rect x="120" y="316" width="120" height="4" class="bar"/>
+        <text x="180" y="308" class="cval" text-anchor="middle" style="font-size:12px">0.5</text>
+        <rect x="290" y="296" width="120" height="24" class="bar"/>
+        <text x="350" y="286" class="cval" text-anchor="middle" style="font-size:12px">3</text>
+        <rect x="460" y="243" width="120" height="77" class="bar"/>
+        <text x="520" y="233" class="cval" text-anchor="middle" style="font-size:12px">10</text>
+        <rect x="630" y="109" width="120" height="211" class="bar"/>
+        <text x="690" y="99" class="cval" text-anchor="middle" style="font-size:12px">30</text>
+        <rect x="800" y="20" width="120" height="300" class="bar hi"/>
+        <text x="860" y="14" class="cval" text-anchor="middle">80</text>
+        <!-- stages -->
+        <text x="180" y="350" class="clegend" text-anchor="middle">种子期 Y1</text>
+        <text x="350" y="350" class="clegend" text-anchor="middle">扩张期 Y2–3</text>
+        <text x="520" y="350" class="clegend" text-anchor="middle">扩张期</text>
+        <text x="690" y="350" class="clegend" text-anchor="middle">规模化 Y4</text>
+        <text x="860" y="350" class="clegend" text-anchor="middle">规模化 Y5</text>
+        <text x="80" y="368" class="clegend">GMV（亿元）</text>
+      </svg>
+      <div class="row" style="margin-top:14px;">
+        <div class="c4"><div class="card"><div class="kpi-label">种子期 · Y1</div><div class="kpi-sub">聚焦上海顶级社区，打磨 SOP，100 户 / 500 万 GMV。</div></div></div>
+        <div class="c4"><div class="card"><div class="kpi-label">扩张期 · Y2–3</div><div class="kpi-sub">复制 4 城，建 Butler Academy，1 万户 / 5 亿 GMV。</div></div></div>
+        <div class="c4"><div class="card"><div class="kpi-label">规模化 · Y4–5</div><div class="kpi-sub">覆盖 15 城，推 SaaS，启动 IPO，10–50 万户 / 50–80 亿 GMV。</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · ACQUISITION -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 05 · 获客策略</div>
+      <div class="h1" style="margin-bottom:34px;">高端家庭的五条精准渠道</div>
+      <svg class="chart" viewBox="0 0 1000 320" role="img" aria-label="获客渠道占比">
+        <text x="0" y="44" class="clab">私行合作</text>
+        <rect x="150" y="26" width="780" height="34" class="bar hi"/>
+        <text x="942" y="50" class="cval" text-anchor="end">30% · CAC ¥2,000</text>
+
+        <text x="0" y="124" class="clab">高端社区</text>
+        <rect x="150" y="106" width="650" height="34" class="bar"/>
+        <text x="812" y="130" class="cval" text-anchor="end">25% · ¥1,500</text>
+
+        <text x="0" y="204" class="clab">KOL / 圈层</text>
+        <rect x="150" y="186" width="520" height="34" class="bar"/>
+        <text x="682" y="210" class="cval" text-anchor="end">20% · ¥1,000</text>
+
+        <text x="0" y="284" class="clab">异业联盟</text>
+        <rect x="150" y="266" width="390" height="34" class="bar"/>
+        <text x="552" y="290" class="cval" text-anchor="end">15% · ¥3,000</text>
+
+        <text x="150" y="312" class="clegend" style="font-size:11px">线上精准 10% · ¥4,000（占比最低、成本最高，仅作补量）</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 13 · SUPPLY SIDE -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 05 · 管家供给侧</div>
+      <div class="h1" style="margin-bottom:30px;">优质管家，从哪来、怎么长</div>
+      <div class="split">
+        <div>
+          <div class="kpi-label" style="margin-bottom:12px;color:var(--navy)">管家来源结构</div>
+          <svg class="chart" viewBox="0 0 1000 230" role="img" aria-label="管家来源">
+            <text x="0" y="40" class="clab">高端酒店</text>
+            <rect x="140" y="22" width="780" height="30" class="bar hi"/>
+            <text x="932" y="44" class="cval" text-anchor="end">40%</text>
+            <text x="0" y="120" class="clab">航空乘务</text>
+            <rect x="140" y="102" width="487" height="30" class="bar"/>
+            <text x="639" y="124" class="cval" text-anchor="end">25%</text>
+            <text x="0" y="200" class="clab">海归 / 留学生</text>
+            <rect x="140" y="182" width="390" height="30" class="bar"/>
+            <text x="542" y="204" class="cval" text-anchor="end">20%</text>
+            <text x="0" y="262" class="clab" style="font-size:11px">传统家政升级 15%</text>
+          </svg>
+        </div>
+        <div>
+          <div class="kpi-label" style="margin-bottom:12px;color:var(--cyan)">培养路径（Butler Academy）</div>
+          <ul class="note">
+            <li><b style="color:var(--navy)">初级管家</b>：3 个月培训 → Butler Certificate</li>
+            <li><b style="color:var(--navy)">中级管家</b>：6 个月实战 → Butler Professional</li>
+            <li><b style="color:var(--navy)">高级管家</b>：1 年+ 认证 → Butler Master</li>
+            <li><b style="color:var(--navy)">首席管家</b>：3 年+ 客户认可</li>
+          </ul>
+          <div class="card" style="margin-top:22px;background:var(--mist);border:none;"><div class="small">年培养 500+ 认证管家；与职业院校合作锁定人才，期权计划绑定核心人才。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · FINANCIAL FORECAST -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 06 · 财务预测</div>
+      <div class="h1" style="margin-bottom:14px;">五年财务预测（GMV vs 收入）</div>
+      <div class="lead" style="margin-bottom:18px;">总收入由 0.05 亿增至 77 亿，运营利润率 Year 5 达 67%。</div>
+      <svg class="chart" viewBox="0 0 1000 380" role="img" aria-label="五年财务预测">
+        <line x1="80" y1="320" x2="960" y2="320" class="axis"/>
+        <!-- GMV bars (navy) -->
+        <rect x="120" y="316" width="110" height="4" class="bar"/>
+        <rect x="290" y="296" width="110" height="24" class="bar"/>
+        <rect x="460" y="243" width="110" height="77" class="bar"/>
+        <rect x="630" y="109" width="110" height="211" class="bar"/>
+        <rect x="800" y="20" width="110" height="300" class="bar"/>
+        <!-- revenue line (cyan) -->
+        <polyline class="cline" points="175,319 345,317 615,309 785,287 855,230"/>
+        <circle cx="175" cy="319" r="5" class="cdot"/>
+        <circle cx="345" cy="317" r="5" class="cdot"/>
+        <circle cx="615" cy="309" r="5" class="cdot"/>
+        <circle cx="785" cy="287" r="5" class="cdot"/>
+        <circle cx="855" cy="230" r="5" class="cdot"/>
+        <text x="175" y="350" class="clegend" text-anchor="middle">Y1</text>
+        <text x="345" y="350" class="clegend" text-anchor="middle">Y2</text>
+        <text x="615" y="350" class="clegend" text-anchor="middle">Y3</text>
+        <text x="785" y="350" class="clegend" text-anchor="middle">Y4</text>
+        <text x="855" y="350" class="clegend" text-anchor="middle">Y5</text>
+        <text x="80" y="368" class="clegend">柱：GMV（亿，0–80）｜ 线：营业收入（亿）</text>
+        <text x="940" y="230" class="clegend" text-anchor="end" style="fill:var(--cyan)">收入 77 亿</text>
+      </svg>
+      <div class="row" style="margin-top:6px;">
+        <div class="c3"><div class="card"><div class="kpi-label">Year 3 毛利率</div><div class="kpi-val" style="font-size:28px;">65%</div></div></div>
+        <div class="c3"><div class="card"><div class="kpi-label">Year 5 毛利率</div><div class="kpi-val" style="font-size:28px;">72%</div></div></div>
+        <div class="c3"><div class="card"><div class="kpi-label">Year 5 运营利润</div><div class="kpi-val" style="font-size:28px;">6<span class="u">亿</span></div></div></div>
+        <div class="c3"><div class="card"><div class="kpi-label">Year 5 家庭数</div><div class="kpi-val" style="font-size:28px;">5<span class="u">万</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 · FUNDING ROADMAP -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 06 · 融资规划</div>
+      <div class="h1" style="margin-bottom:46px;">融资路线图：五步走，通向 IPO</div>
+      <div class="tl">
+        <div class="node"><div class="dot"></div><div class="yr">已完成</div><div class="t">天使轮</div><div class="d">500 万 · 估值 2500 万<br>MVP · 种子用户</div></div>
+        <div class="node"><div class="dot now"></div><div class="yr">Now</div><div class="t">Pre-A 轮</div><div class="d">3000 万 · 估值 1.5 亿<br>上海验证 · 团队建设</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 2</div><div class="t">A 轮</div><div class="d">1.2 亿 · 估值 6 亿<br>4 城扩张 · Academy</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 3</div><div class="t">B 轮</div><div class="d">3–5 亿 · 估值 20 亿<br>全国 15 城 · SaaS</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 4–5</div><div class="t">C / Pre-IPO</div><div class="d">8–15 亿 · 估值 50 亿+<br>IPO 准备 · 并购整合</div></div>
+      </div>
+      <div class="card" style="margin-top:40px;background:var(--mist);border:none;"><div class="small"><b style="color:var(--navy)">本轮 Pre-A 条款：</b>融资 3000 万 · 投前估值 1.5 亿 · 稀释 16.67% · 1x 非参与清算优先 · 加权平均反稀释 · 投资方 1 名董事会观察员。</div></div>
+    </div>
+  </section>
+
+  <!-- 16 · CAPITAL EFFICIENCY -->
+  <section class="slide dark">
+    <div class="inner">
+      <div class="eyebrow">Chapter 06 · 资本效率指标</div>
+      <div class="h1" style="margin-bottom:34px;">越跑越快，越省越赚</div>
+      <div class="split">
+        <div>
+          <div class="kpi-label" style="margin-bottom:14px;color:#9fb4c6">LTV / CAC 走势</div>
+          <svg class="chart" viewBox="0 0 1000 320" role="img" aria-label="LTV CAC">
+            <line x1="80" y1="280" x2="960" y2="280" class="axis"/>
+            <polyline class="cline" points="200,196 500,116 800,60"/>
+            <circle cx="200" cy="196" r="6" class="cdot"/>
+            <circle cx="500" cy="116" r="6" class="cdot"/>
+            <circle cx="800" cy="60" r="6" class="cdot"/>
+            <text x="200" y="320" class="clegend" text-anchor="middle">Y1 · 8x</text>
+            <text x="500" y="320" class="clegend" text-anchor="middle">Y3 · 15x</text>
+            <text x="800" y="320" class="clegend" text-anchor="middle">Y5 · 20x</text>
+          </svg>
+        </div>
+        <div>
+          <div class="row" style="grid-template-columns:1fr 1fr;gap:18px;">
+            <div class="card"><div class="kpi-label">回本周期</div><div class="kpi-val" style="font-size:26px;">12→6<span class="u">月</span></div></div>
+            <div class="card"><div class="kpi-label">月度流失率</div><div class="kpi-val" style="font-size:26px;">5→2<span class="u">%</span></div></div>
+            <div class="card"><div class="kpi-label">NPS</div><div class="kpi-val" style="font-size:26px;">50→70</div></div>
+            <div class="card"><div class="kpi-label">净利率 Y5</div><div class="kpi-val" style="font-size:26px;">57<span class="u">%</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · TEAM -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 07 · 团队与组织</div>
+      <div class="h1" style="margin-bottom:30px;">顶级人才，期权充足</div>
+      <table style="margin-bottom:30px;">
+        <thead><tr><th>岗位</th><th>要求</th><th>期权</th></tr></thead>
+        <tbody>
+          <tr><td class="hl">CEO</td><td>10 年+ 高端服务 / 平台，从 0 到 1 成功案例</td><td>15%</td></tr>
+          <tr><td class="hl">COO</td><td>曾任高端酒店 / 物业高管，懂服务运营</td><td>5%</td></tr>
+          <tr><td class="hl">CTO</td><td>互联网大厂背景，精通平台架构</td><td>5%</td></tr>
+          <tr><td class="hl">CMO</td><td>高净值营销专家，奢侈品 / 私行背景</td><td>3%</td></tr>
+          <tr><td class="hl">CFO</td><td>IPO 经验，熟悉港股 / A 股流程</td><td>2%</td></tr>
+        </tbody>
+      </table>
+      <div class="kpi-label" style="margin-bottom:14px;color:var(--navy)">组织规模演进</div>
+      <div class="tl">
+        <div class="node"><div class="dot"></div><div class="yr">Year 1</div><div class="t">30 人</div><div class="d">验证期 · 管家运营 15</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 3</div><div class="t">200 人</div><div class="d">扩张期 · 管家运营 120</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 5</div><div class="t">800 人</div><div class="d">规模化 · 含 Academy 500</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 · RISK -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 08 · 风险与应对</div>
+      <div class="h1" style="margin-bottom:28px;">每一个风险，都有预案</div>
+      <table>
+        <thead><tr><th>风险</th><th>概率</th><th>影响</th><th>应对策略</th></tr></thead>
+        <tbody>
+          <tr><td class="hl">服务质量</td><td>中</td><td>高</td><td>SOP + 神秘客机制 + 保险赔付</td></tr>
+          <tr><td class="hl">人才流失</td><td>高</td><td>高</td><td>期权绑定 + 竞业协议 + 培养体系</td></tr>
+          <tr><td class="hl">监管风险</td><td>低</td><td>中</td><td>合规经营 + 行业标准话语权</td></tr>
+          <tr><td class="hl">竞争加剧</td><td>中</td><td>中</td><td>深耕高端 + 建立品牌心智</td></tr>
+          <tr><td class="hl">经济下行</td><td>中</td><td>中</td><td>灵活套餐 + 锁定核心客户</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 19 · MILESTONES & HIGHLIGHTS -->
+  <section class="slide">
+    <div class="inner">
+      <div class="eyebrow">Chapter 09 · 里程碑与退出准备</div>
+      <div class="h1" style="margin-bottom:38px;">通往挂牌的清晰节奏</div>
+      <div class="tl" style="margin-bottom:46px;">
+        <div class="node"><div class="dot"></div><div class="yr">Year 3</div><div class="t">股改</div><div class="d">完成 A 轮，建立规范财务体系</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 4</div><div class="t">Pre-IPO</div><div class="d">引入主权基金 / PE</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 5 H1</div><div class="t">审计辅导</div><div class="d">审计报告 + 上市辅导</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 5 H2</div><div class="t">路演</div><div class="d">提交招股书</div></div>
+        <div class="node"><div class="dot"></div><div class="yr">Year 6</div><div class="t">挂牌</div><div class="d">上市</div></div>
+      </div>
+      <div class="kpi-label" style="margin-bottom:16px;color:var(--cyan)">五大投资亮点</div>
+      <ul class="note">
+        <li><b style="color:var(--navy)">赛道优质</b>：千亿级高端服务，尚无绝对龙头。</li>
+        <li><b style="color:var(--navy)">模式稀缺</b>：订阅 + 平台撮合，资本效率高。</li>
+        <li><b style="color:var(--navy)">壁垒深厚</b>：认证 + 数据 + 品牌，护城河清晰。</li>
+        <li><b style="color:var(--navy)">退出明确</b>：港股 / A 股 IPO 窗口友好。</li>
+        <li><b style="color:var(--navy)">团队待组</b>：顶级人才期权充足。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 20 · CLOSING -->
+  <section class="slide is-active-closing" data-bg="closing">
+    <div class="cover-grid">
+      <div class="closing-left">
+        <div class="badge">以终为始 · From IPO Backward</div>
+        <div class="cta-line">以终为始，<br>从 IPO 倒推每一步。<br><span class="accent">巴特勒管家</span>，中国高端家庭服务的第一品牌。</div>
+        <div class="contact">
+          投资人关系 · ir@butlerhouse.com<br>
+          Pre-A 轮 · 3000 万人民币 · 估值 1.5 亿<br>
+          机密文件 · 仅供投资人查阅
+        </div>
+      </div>
+      <div class="closing-right">
+        <div class="cover-img" style="background-image:url('assets/Calm_minimalist_horizon__a_sti_2026-07-07T15-03-54.png')"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="progress" id="progress"></div>
+  <div class="hint">← → 翻页 · 点击推进</div>
+  <div class="hud" id="hud">01 / 20</div>
+</div>
+
+<script>
+  (function(){
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var total = slides.length;
+    var cur = 0;
+    var prog = document.getElementById('progress');
+    var hud = document.getElementById('hud');
+    function pad(n){return (n<10?'0':'')+n;}
+    function render(){
+      slides.forEach(function(s,i){ s.classList.toggle('is-active', i===cur); });
+      var pct = (cur+1)/total*100;
+      prog.style.width = pct + '%';
+      hud.textContent = pad(cur+1) + ' / ' + pad(total);
+      // dark hud styling
+      var dark = slides[cur].classList.contains('dark') || slides[cur].hasAttribute('data-bg');
+      hud.classList.toggle('on-dark', !!dark);
+    }
+    function go(i){ cur = Math.max(0, Math.min(total-1, i)); render(); }
+    function next(){ if(cur<total-1) go(cur+1); }
+    function prev(){ if(cur>0) go(cur-1); }
+    document.addEventListener('keydown', function(e){
+      if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ e.preventDefault(); next(); }
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); prev(); }
+      else if(e.key==='Home'){ go(0); }
+      else if(e.key==='End'){ go(total-1); }
+    });
+    document.getElementById('deck').addEventListener('click', function(e){
+      if(e.target.closest('a')) return;
+      next();
+    });
+    // touch
+    var x0=null;
+    document.addEventListener('touchstart', function(e){ x0=e.touches[0].clientX; }, {passive:true});
+    document.addEventListener('touchend', function(e){
+      if(x0===null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx)>40){ dx<0?next():prev(); }
+      x0=null;
+    }, {passive:true});
+    // hash deep-link
+    if(location.hash.match(/^#\/(\d+)/)){ go(parseInt(RegExp.$1,10)-1); }
+    render();
+  })();
+</script>
+</body>
+</html>
